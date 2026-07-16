@@ -48,6 +48,7 @@ def embed_sequences(sequences, tokenizer, model, device, batch_size=16, pooling=
         batch = list(seqs[i:i + batch_size])
         inputs = tokenizer(batch, return_tensors="pt", padding=True, truncation=True)
         inputs = {k: v.to(device) for k, v in inputs.items()}
+        print(inputs.keys())
 
         with torch.inference_mode():
             outputs = model(**inputs)[0]
@@ -63,10 +64,10 @@ def embed_sequences(sequences, tokenizer, model, device, batch_size=16, pooling=
     return headers, embeddings
 
 
-def save_to_csv(headers, embeddings, output_file):
+def save_to_tsv(headers, embeddings, output_file):
     dim = embeddings.shape[1]
     with open(output_file, "w", newline="") as f:
-        writer = csv.writer(f)
+        writer = csv.writer(f, delimiter="\t")
         writer.writerow(["id"] + [f"dim_{i}" for i in range(dim)])
         for h, emb in zip(headers, embeddings):
             writer.writerow([h] + emb.tolist())
@@ -75,12 +76,12 @@ def save_to_csv(headers, embeddings, output_file):
 def main():
     parser = argparse.ArgumentParser(description="DNABERT-2 FASTA embedding script")
     parser.add_argument("--model", type=str,
-                        default="../../../DNABERT-2-117M-adapted",
+                        default="zhihan1996/DNABERT-2-117M",
                         help="Model name or path")
     parser.add_argument("--fasta", type=str, required=True,
                         help="Input FASTA file")
-    parser.add_argument("--output", type=str, default="results/embeddings.csv",
-                        help="Output CSV file")
+    parser.add_argument("--output", type=str, default="embeddings.tsv",
+                        help="Output TSV file")
     parser.add_argument("--batch_size", type=int, default=16)
     parser.add_argument("--pooling", choices=["mean", "max"], default="mean")
 
@@ -112,8 +113,8 @@ def main():
         pooling=args.pooling
     )
 
-    print("Saving CSV...")
-    save_to_csv(headers, embeddings, args.output)
+    print("Saving TSV...")
+    save_to_tsv(headers, embeddings, args.output)
 
     print("Done.")
     print("Output shape:", embeddings.shape)

@@ -11,14 +11,13 @@
 #                 "tabular-classification", regressors use "tabular-regression"
 #                 (https://huggingface.co/models?pipeline_tag=tabular-classification)
 #   domain        Coarse data domain (tabular / image / text / audio / ...)
-#   free_tag      Per-tool-family namespace used as the primary XML filter;
-#                 TabPFN rows use "tabpfn"
+#   free_tag      Per-tool-family namespace used as the primary XML filter
 #   version       Tool version these rows belong to; used as a secondary XML filter
 #   path          Path to the model checkpoint (.ckpt) or directory on this server
 #
 # Administrators: copy this file to your Galaxy tool-data directory as
 # "huggingface.loc" and update each path to point to the actual model files.
-# Models can be downloaded from: https://huggingface.co/prior-labs/tabpfn_2_5
+# Models can be downloaded from: ..... !!!!!!!!!!!!!!!!!!!!
 #
 # For the full shared schema reference see:
 #   https://galaxyproject.org/news/2026-04-13-huggingface-data-table/
@@ -27,4 +26,4 @@
 # prior-labs/tabpfn_2_5/tabpfn-v2.5-classifier-v2.5_default	tabpfn-v2.5-classifier-v2.5_default	tabular-classification	tabular	tabpfn	1	/data/models/tabpfn-v2.5-classifier-v2.5_default.ckpt
 #
 # Classification models
-local-dnabert2-model-1	DNABERT-2-117M	fill-mask	text	dnabert	1	"path-to-model"
+local-dnabert2-model-1	DNABERT-2-117M	fill-mask	text	dnabert	1	"/path/to/model"
